@@ -1,0 +1,12 @@
+<link phx-track-static rel="stylesheet" href={~p"/assets/app.css"}>
+<div class="results-container">
+  <h1>Palette de couleurs</h1>
+  <ul class="color-list">
+    <%= for {r, g, b} <- @results do %>
+      <li class="color-item">
+        <span class="color-description">Couleur RGB: (<%= r %>, <%= g %>, <%= b %>)</span>
+        <div class="color-preview" style={"background-color: rgb(" <> Integer.to_string(r) <> ", " <> Integer.to_string(g) <> ", " <> Integer.to_string(b) <> ");"}></div>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -18,9 +18,12 @@ defmodule TestWebscrappingWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    post "/analyze", PageController, :analyze
+    get "/analyze", PageController, :analyze
 
     live "/color", ColorPaletteLive
+
+    get "/form", PageController, :form
+    post "/form/submit", PageController, :submit
   end
 
   # Other scopes may use custom stacks.

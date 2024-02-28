@@ -8,11 +8,21 @@ defmodule TestWebscrappingWeb.PageController do
   end
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn, :index)
   end
 
-  def analyze(conn, %{"url" => site_url}) do
+  def analyze(conn, _params) do
     # Your logic here
-    render(conn, "index.html", site_url: site_url)
+    render(conn, :color_results, layout: false)
+  end
+
+  def form(conn, _params) do
+    csrf_token = Phoenix.Controller.get_csrf_token()
+    render(conn, :form, csrf_token: csrf_token, layout: false)
+  end
+
+  def submit(conn, %{"sample_input" => sample_input}) do
+    results = ColorAnalysisOrchestrator.analyze_site_colors(sample_input)
+    render(conn, :results, results: results, layout: false)
   end
 end

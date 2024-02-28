@@ -1,9 +1,9 @@
 defmodule ColorAnalysisOrchestrator do
   # Utilise Task pour exécuter des opérations en parallèle
   def analyze_site_colors(url) do
-    base_url = get_base_url(url) # Obtient l'URL de base
     case TestWebscrapping.WebScraper.fetch_and_parse(url) do
     {:ok, image_paths} ->
+        base_url = get_base_url(url) # Obtient l'URL de base
         image_paths
         |> List.flatten() # Aplatit la liste de listes en une seule liste
         |> Enum.filter(&(&1 != [])) # Filtre les listes vides.
