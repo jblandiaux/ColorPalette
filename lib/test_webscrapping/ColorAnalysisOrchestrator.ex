@@ -4,16 +4,19 @@ defmodule ColorAnalysisOrchestrator do
     case TestWebscrapping.WebScraper.fetch_and_parse(url) do
     {:ok, image_paths} ->
         base_url = get_base_url(url) # Obtient l'URL de base
-        image_paths
-        |> List.flatten() # Aplatit la liste de listes en une seule liste
-        |> Enum.filter(&(&1 != [])) # Filtre les listes vides.
-        |> Enum.filter(&valid_image_url?/1) # Valide l'URL avant de procéder.
-        |> Enum.map(&analyze_image_colors_async(base_url,&1))
-        |> Enum.map(&Task.await(&1, 15000)) # Attend jusqu'à 15 secondes pour chaque tâche
-        |> process_colors_results()
+        results = image_paths
+          |> List.flatten() # Aplatit la liste de listes en une seule liste
+          |> Enum.filter(&(&1 != [])) # Filtre les listes vides.
+          |> Enum.filter(&valid_image_url?/1) # Valide l'URL avant de procéder.
+          |> Enum.map(&analyze_image_colors_async(base_url,&1))
+          |> Enum.map(&Task.await(&1, 15000)) # Attend jusqu'à 15 secondes pour chaque tâche
+          |> process_colors_results()
+        {:ok, results}
 
-      {:error, _reason} ->
+
+      {:error, reason} ->
         IO.puts("Erreur lors de la récupération des chemins des images")
+        {:error, reason}
     end
   end
 

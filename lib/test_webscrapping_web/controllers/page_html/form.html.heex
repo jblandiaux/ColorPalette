@@ -9,12 +9,17 @@
     </p>
     <div class="form-container">
       <form action="/form/submit" method="post">
-        <input type="hidden" name="_csrf_token" value={@csrf_token} />
+        <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
         <div class="form-group">
           <label for="url_input">URL du site web :</label>
           <input type="url" id="url_input" name="sample_input" placeholder="https://www.google.com/" class="form-input" pattern="https?://.+" title="L'URL doit commencer par http:// ou https://" required>
         </div>
         <button type="submit" class="form-button">Analyser</button>
+        <%= if @flash["error"] do %>
+  <div class="error-message">
+    <%= @flash["error"] %>
+  </div>
+  <% end %>
       </form>
     </div>
   </div>

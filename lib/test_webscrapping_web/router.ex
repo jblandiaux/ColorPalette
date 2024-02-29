@@ -24,6 +24,7 @@ defmodule TestWebscrappingWeb.Router do
 
     get "/form", PageController, :form
     post "/form/submit", PageController, :submit
+    get "/redirect_form", PageController, :redirect_form
   end
 
   # Other scopes may use custom stacks.

@@ -18,7 +18,7 @@ defmodule TestWebscrapping.WebScraper do
       {:ok, %HTTPoison.Response{status_code: status_code}} ->
         {:error, "Failed to fetch. Status code: #{status_code}"}
       {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, reason}
+        {:error, "Le site web mentionné est incorrect ou inexistant"}
     end
   end
 

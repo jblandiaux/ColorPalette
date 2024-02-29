@@ -16,13 +16,22 @@ defmodule TestWebscrappingWeb.PageController do
     render(conn, :color_results, layout: false)
   end
 
+  def redirect_form(conn, _params) do
+    render(conn, :form, layout: false)
+  end
+
   def form(conn, _params) do
-    csrf_token = Phoenix.Controller.get_csrf_token()
-    render(conn, :form, csrf_token: csrf_token, layout: false)
+    redirect(conn, to: ~p"/redirect_form")
   end
 
   def submit(conn, %{"sample_input" => sample_input}) do
-    results = ColorAnalysisOrchestrator.analyze_site_colors(sample_input)
-    render(conn, :results, results: results, layout: false)
+    case ColorAnalysisOrchestrator.analyze_site_colors(sample_input) do
+      {:ok, color_results} ->
+        render(conn, :results, results: color_results, layout: false)
+        {:error, error_reason} ->
+          conn
+        |> put_flash(:error, error_reason)
+        |> redirect(to: "/form")
+      end
   end
 end

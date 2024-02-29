@@ -123,4 +123,18 @@ body {
     border: 1px solid #ddd;
     
   }
+  /* Error */
+  .error-message {
+    padding: 10px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+    text-align: center;
+    justify-content: center; /* Centre le contenu du div horizontalement pour les éléments flex */
+    align-items: center;
+  }
   
